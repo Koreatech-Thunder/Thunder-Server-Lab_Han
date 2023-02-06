@@ -1,9 +1,9 @@
+import mongoose from "mongoose";
+
 export interface ThunderCreateDto {
     title:string;
-    dDay:string;
-    meetTime:string;
+    deadline:string;
     content:string;
-    hashtags:number[];
-    hostId:string;//id<Object>
-    limitPlayerCount:number;
+    hashtags:string[];
+    limitMembersCnt:number;
 }

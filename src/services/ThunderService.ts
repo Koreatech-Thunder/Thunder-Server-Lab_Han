@@ -8,16 +8,14 @@ const createThunder = async(thunderCreateDto: ThunderCreateDto):Promise<PostBase
     try {
         const thunder = new Thunder({
             title: thunderCreateDto.title,
-            dDay: thunderCreateDto.dDay,
-            meetTime: thunderCreateDto.meetTime,
+            deadline: thunderCreateDto.deadline,
             hashtags: thunderCreateDto.hashtags,
             content: thunderCreateDto.content,
-            hostId: thunderCreateDto.hostId,
-            limitPlayerCount: thunderCreateDto.limitPlayerCount
+            limitMembersCnt: thunderCreateDto.limitMembersCnt
         });
 
         await thunder.save();
-
+      
         const data = {
             _id: thunder._id
         };
@@ -33,13 +31,11 @@ const updateThunder = async(thunderId: string, thunderUpdateDto: ThunderUpdateDt
     try {
         const updateThunder ={
             title: thunderUpdateDto.title,
-            dDay: thunderUpdateDto.dDay,
-            meetTime: thunderUpdateDto.meetTime,
+            deadline: thunderUpdateDto.deadline,
             hashtags: thunderUpdateDto.hashtags,
             content: thunderUpdateDto.content,
-            host: thunderUpdateDto.hostId,
-            players: thunderUpdateDto.players,
-            limitPlayerCount: thunderUpdateDto.limitPlayerCount
+            members: thunderUpdateDto.members,
+            limitMembersCnt: thunderUpdateDto.limitMembersCnt
         };
 
         await Thunder.findByIdAndUpdate(thunderId, updateThunder);
@@ -51,9 +47,31 @@ const updateThunder = async(thunderId: string, thunderUpdateDto: ThunderUpdateDt
 
 const findThunderById = async(thunderId: string)=>{
     try {
-        const thunder : ThunderResponseDto[] | null = await Thunder.findById(thunderId);
+        const thunder : ThunderResponseDto | null = await Thunder.findById(thunderId);
 
         return thunder;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const findThunderAll = async()=>{
+    try {
+        const thunder : ThunderResponseDto[] | null = await Thunder.find();
+
+        return thunder;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const findThunderByHashtag = async(hashtag: string)=>{
+    try {
+        const thunder : ThunderResponseDto[] | null = await Thunder.find({ hashtags : hashtag});
+        return thunder;
+        
     } catch(error) {
         console.log(error);
         throw error;
@@ -73,5 +91,7 @@ export default {
     createThunder,
     updateThunder,
     findThunderById,
-    deleteThunder
+    deleteThunder,
+    findThunderAll,
+    findThunderByHashtag
 }

@@ -1,10 +1,11 @@
+import mongoose from "mongoose";
+
 export interface ThunderUpdateDto {
     title?:string;
-    dDay?:string;
-    meetTime?:string;
+    deadline?:string;
     content?:string;
-    hashtags?:number[];
-    hostId?:string;//id<Object>
-    players?:string[];//id<Object>
-    limitPlayerCount?:number;
+    hashtags?:string[];
+    members?:mongoose.Types.ObjectId[];//id<Object>
+    limitMembersCnt?:number;
+    //thunderState? :string;
 }

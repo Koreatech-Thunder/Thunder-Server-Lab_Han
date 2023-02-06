@@ -12,7 +12,6 @@ import {PostBaseResponseDto} from "../interfaces/common/PostBaseResponseDto";
 import statusCode from "../modules/statusCode";
 import message from "../modules/message";
 import UserService from "../services/UserService";
-import util from "../modules/util";
 
 const createUser = async(req:Request, res: Response):Promise<void> => {
     const userCreateDto: UserCreateDto = req.body;
@@ -20,15 +19,10 @@ const createUser = async(req:Request, res: Response):Promise<void> => {
     try {
         const data: PostBaseResponseDto = await UserService.createUser(userCreateDto);
 
-        res.status(statusCode.CREATED).send(util.success(data));       
+        res.status(statusCode.CREATED).send(data);       
     } catch (error) {
         console.log(error);
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(
-            util.fail(
-                statusCode.INTERNAL_SERVER_ERROR,
-                message.INTERNAL_SERVER_ERROR,
-                )
-            ); 
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(); 
     }
 }
 /**
@@ -47,12 +41,7 @@ const updateUser = async(req:Request, res: Response):Promise<void> => {
         res.status(statusCode.NO_CONTENT).send();     
     } catch (error) {
         console.log(error);
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(
-            util.fail(
-                statusCode.INTERNAL_SERVER_ERROR,
-                message.INTERNAL_SERVER_ERROR,
-                )
-            ); 
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(); 
     }
 }
 /**
@@ -66,6 +55,24 @@ const findUserById = async(req:Request, res: Response):Promise<void> => {
 
     try {
         const data: UserResponseDto | null = await UserService.findUserById(userId);
+
+        res.status(statusCode.OK).send(data);     
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(); 
+    }
+}
+/**
+ * 
+ * @route GET / user/hashtags/:userId 
+ * @desc Get User
+ * @access Public 
+ */
+const findUserHashtag = async(req:Request, res: Response):Promise<void> => {
+    const {userId} = req.params;
+
+    try {
+        const data: string[] | null = await UserService.findUserHashtag(userId);
 
         res.status(statusCode.OK).send(data);     
     } catch (error) {
@@ -96,5 +103,6 @@ export default {
     createUser,
     updateUser,
     findUserById,
-    deleteUser
+    deleteUser,
+    findUserHashtag
 }

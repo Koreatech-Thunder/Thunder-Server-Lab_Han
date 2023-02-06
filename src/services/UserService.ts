@@ -51,6 +51,16 @@ const findUserById = async(userId: string)=>{
     }
 }
 
+const findUserHashtag = async(userId: string)=>{
+    try {
+        const user : UserResponseDto | null = await User.findById(userId);
+
+        return user?.hashtags;
+    } catch(error) {
+        console.log(error);
+        throw error;
+    }
+}
 const deleteUser = async(userId: string)=>{
     try {
         await User.findByIdAndDelete(userId);
@@ -64,5 +74,6 @@ export default {
     createUser,
     updateUser,
     findUserById,
-    deleteUser
+    deleteUser,
+    findUserHashtag
 }

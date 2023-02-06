@@ -7,13 +7,16 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     introduction: {
-        type: String
+        type: String,
+        default: ''
     },
     temperature: {
-        type: Number
+        type: Number,
+        default: 36.5
     },
     hashtags: {
-        type: [Number]
+        type: [String],
+        default: [null]
     }
 });
 
