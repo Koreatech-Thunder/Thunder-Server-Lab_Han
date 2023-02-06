@@ -4,41 +4,42 @@ import { ThunderInfo } from "../interfaces/thunder/ThunderInfo";
 const ThunderSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        default: ''
     },
-    dDay: {
+    deadline: {
         type: String,
-        required: true
-    },
-    meetTime: {
-        type: String,
-        required: true
+        required: true,
+        defalut: Date.now
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        default: ''
     },
     hashtags: {
-        type: [Number],
+        type: [String],
+        required: false,
+        default: [null]
+    },
+    members: {
+        type: [mongoose.Types.ObjectId],
         required: true
+        //default:[hostId]
     },
-    hostId: {
-        type: String,
-        required: true
-    },
-    players: {
-        type: [String]
-    },
-    limitPlayerCount: {
+    limitMembersCnt: {
         type: Number,
         required: true
     },
     ceatedAt: {
-        type: Date
+        type: Date,
+        required: false
     },
     updateAt: {
-        type: Date
+        type: Date,
+        required: false
     }
 });
 
+ThunderSchema.static('find', function(any, callback){return this.find({}, callback);});
 export default mongoose.model<ThunderInfo & mongoose.Document>("Thunder", ThunderSchema);

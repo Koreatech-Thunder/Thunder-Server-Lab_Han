@@ -1,9 +1,11 @@
-export interface ThunderResponseDto {
+import mongoose from "mongoose";
+
+export interface ThunderResponseDto{
     title:string;
-    dDay:string;
-    meetTime:string;
+    deadline:string;
     content:string;
-    hashtags:number[];
-    hostId:string;//id<Object>
-    limitPlayerCount:number;
+    hashtags:string[];
+    members:mongoose.Types.ObjectId[];//id<Object>
+    limitMembersCnt:number;
+    //thunderState :string;
 }

@@ -18,7 +18,6 @@ interface ErrorType {
 }
 
 app.use(function (err: ErrorType, req: Request, res: Response, next: NextFunction) {
-
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "production" ? err : {};
 
